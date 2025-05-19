@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Footer = () => {
   return (
@@ -8,9 +8,30 @@ const Footer = () => {
         <div>
           <h3 className="font-bold text-lg mb-4">Inside Medico</h3>
           <ul className="space-y-3">
-            <li><a href="#" className="hover:text-blue-200 transition duration-300">FAQ</a></li>
-            <li><a href="#" className="hover:text-blue-200 transition duration-300">Careers</a></li>
-            <li><a href="#" className="hover:text-blue-200 transition duration-300">Blog</a></li>
+            <li>
+              <a
+                href="https://devhub1.vercel.app"
+                className="hover:text-blue-200 transition duration-300"
+              >
+                FAQ
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://devhub1.vercel.app"
+                className="hover:text-blue-200 transition duration-300"
+              >
+                Careers
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://devhub1.vercel.app"
+                className="hover:text-blue-200 transition duration-300"
+              >
+                Blog
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -18,10 +39,38 @@ const Footer = () => {
         <div>
           <h3 className="font-bold text-lg mb-4">Terms & Conditions</h3>
           <ul className="space-y-3">
-            <li><a href="#" className="hover:text-blue-200 transition duration-300">Terms of Use</a></li>
-            <li><a href="#" className="hover:text-blue-200 transition duration-300">Membership Terms</a></li>
-            <li><a href="#" className="hover:text-blue-200 transition duration-300">Privacy Policy</a></li>
-            <li><a href="#" className="hover:text-blue-200 transition duration-300">Cancellation & Refund policy</a></li>
+            <li>
+              <a
+                href="https://devhub1.vercel.app"
+                className="hover:text-blue-200 transition duration-300"
+              >
+                Terms of Use
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://devhub1.vercel.app"
+                className="hover:text-blue-200 transition duration-300"
+              >
+                Membership Terms
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://devhub1.vercel.app"
+                className="hover:text-blue-200 transition duration-300"
+              >
+                Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://devhub1.vercel.app"
+                className="hover:text-blue-200 transition duration-300"
+              >
+                Cancellation & Refund policy
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -29,9 +78,30 @@ const Footer = () => {
         <div>
           <h3 className="font-bold text-lg mb-4">Contact us</h3>
           <ul className="space-y-3">
-            <li><a href="tel:08047495555" className="hover:text-blue-200 transition duration-300">+91 78409 35392</a></li>
-            <li><a href="#" className="hover:text-blue-200 transition duration-300">WhatsApp</a></li>
-            <li><a href="mailto:hello@even.in" className="hover:text-blue-200 transition duration-300">hello@medico.in</a></li>
+            <li>
+              <a
+                href="tel:08047495555"
+                className="hover:text-blue-200 transition duration-300"
+              >
+                +91 78409 35392
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://devhub1.vercel.app"
+                className="hover:text-blue-200 transition duration-300"
+              >
+                WhatsApp
+              </a>
+            </li>
+            <li>
+              <a
+                href="mailto:hello@even.in"
+                className="hover:text-blue-200 transition duration-300"
+              >
+                hello@medico.in
+              </a>
+            </li>
           </ul>
         </div>
       </div>

@@ -18,17 +18,27 @@ export default function MobileMenu({ isOpen, onClose }) {
 
         {/* Sidebar Links */}
         <nav className="flex flex-col space-y-6 mt-12">
-          <a href="#" className="text-gray-800 hover:text-blue-600">
+          <a
+            href="https://devhub1.vercel.app"
+            className="text-gray-800 hover:text-blue-600"
+          >
             Health Scan
           </a>
-          <a href="#" className="text-gray-800 hover:text-blue-600">
+          <a
+            href="https://devhub1.vercel.app"
+            className="text-gray-800 hover:text-blue-600"
+          >
             Blog
           </a>
-          <a href="#" className="text-gray-800 hover:text-blue-600">
+          <a
+            href="https://devhub1.vercel.app"
+            className="text-gray-800 hover:text-blue-600"
+          >
             FAQ
           </a>
           <Button
-            className="mt-4 px-8 py-2 text-blue-800 border border-blue-700 bg-transparent
+            variant="secondary"
+            className="mt-4 px-8 py-2 text-blue-600 border border-blue-700 bg-transparent
                   hover:border-blue-600 hover:bg-blue-600 hover:text-white
                   transition duration-300 ease-in-out"
           >

@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import MobileMenu from "./mobilemenu";
 
-
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -24,16 +23,26 @@ export default function Header() {
         </div>
 
         <div className="hidden md:flex items-center space-x-8">
-          <a href="#" className="text-gray-700 hover:text-gray-900">
+          <a
+            href="https://devhub1.vercel.app"
+            className="text-gray-700 hover:text-gray-900"
+          >
             Health Scan
           </a>
-          <a href="#" className="text-gray-700 hover:text-gray-900">
+          <a
+            href="https://devhub1.vercel.app"
+            className="text-gray-700 hover:text-gray-900"
+          >
             Blog
           </a>
-          <a href="#" className="text-gray-700 hover:text-gray-900">
+          <a
+            href="https://devhub1.vercel.app"
+            className="text-gray-700 hover:text-gray-900"
+          >
             FAQ
           </a>
           <Button
+            variant="secondary"
             className="px-8 py-2 min-w-[140px] text-blue-800 border border-blue-700 bg-transparent
              hover:border-blue-600 hover:bg-blue-600 hover:text-white
              transition duration-300 ease-in-out"
@@ -42,10 +51,13 @@ export default function Header() {
           </Button>
         </div>
 
-        
         {/* Mobile Menu Button */}
         <div className="md:hidden">
-          <button onClick={() => setIsOpen(true)} className="text-gray-700" aria-label="Open menu">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="text-gray-700"
+            aria-label="Open menu"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -53,13 +65,17 @@ export default function Header() {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
           </button>
         </div>
       </nav>
-            <MobileMenu isOpen={isOpen} onClose={() => setIsOpen(false)} />
-
+      <MobileMenu isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   );
 }
