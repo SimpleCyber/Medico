@@ -2,5 +2,7 @@ node_modules
 /build
 
 
+.env
 
-src/api2/data.js
+
+

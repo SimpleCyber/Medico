@@ -3,9 +3,13 @@ import Button from "../utils/button";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import MobileMenu from "./mobilemenu";
+import { useNavigate,Link } from 'react-router-dom';
+
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
 
   return (
     <div className="fixed top-0 left-0 w-full bg-blue-100  z-50 lg:px-36">
@@ -35,20 +39,28 @@ export default function Header() {
           >
             Blog
           </a>
-          <a
-            href="https://devhub1.vercel.app"
+          <Link
+            to="/auth"
             className="text-gray-700 hover:text-gray-900"
           >
             FAQ
-          </a>
+          </Link>
+
+
           <Button
             variant="secondary"
+            onClick={() => {
+              console.log("Button clicked");
+              navigate("/auth");
+            }}
             className="px-8 py-2 min-w-[140px] text-blue-800 border border-blue-700 bg-transparent
              hover:border-blue-600 hover:bg-blue-600 hover:text-white
              transition duration-300 ease-in-out"
+           
           >
             Sign In
           </Button>
+          
         </div>
 
         {/* Mobile Menu Button */}
