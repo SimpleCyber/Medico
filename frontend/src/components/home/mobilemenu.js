@@ -1,9 +1,12 @@
 import { X } from "lucide-react";
 import Button from "../utils/button.js";
+import { useNavigate,Link } from 'react-router-dom';
+
 
 export default function MobileMenu({ isOpen, onClose }) {
+  const navigate = useNavigate();
   if (!isOpen) return null;
-
+  
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex justify-end">
       <div className="bg-white w-64 h-full shadow-lg p-6 relative">
@@ -38,6 +41,10 @@ export default function MobileMenu({ isOpen, onClose }) {
           </a>
           <Button
             variant="secondary"
+            onClick={() => {
+              console.log("Button clicked");
+              navigate("/auth");
+            }}
             className="mt-4 px-8 py-2 text-blue-600 border border-blue-700 bg-transparent
                   hover:border-blue-600 hover:bg-blue-600 hover:text-white
                   transition duration-300 ease-in-out"
