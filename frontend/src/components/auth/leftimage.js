@@ -27,20 +27,20 @@ const LeftImage = () => {
       <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex flex-col justify-center items-center text-white text-center p-8">
         <div className='-mt-80'>
         {/* Logo and Brand */}
-        <div className="flex items-center mb-4 mr-80">
+        <div className="flex items-center mb-4 mr-52">
           <motion.div
             variants={pulseVariants}
             animate="pulse"
-            className="mr-5"
+            className="mr-3"
           >
-            <HeartPulse size={60} color="#ffffff" />
+            <HeartPulse size={50} color="#ffffff" />
           </motion.div>
           <h1 className="text-4xl font-bold tracking-wide">Medico</h1>
         </div>
         
         {/* Main Heading */}
         <motion.h2 
-          className="text-4xl font-bold mb-3"
+          className="text-3xl font-bold mb-3"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.8 }}
