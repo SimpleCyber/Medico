@@ -17,37 +17,41 @@ const Auth = () => {
   const navigate = useNavigate();
 
   const handleGoogleLogin = async () => {
-  setLoading(true);
-  try {
-    const result = await signInWithPopup(auth, googleProvider);
-    const user = result.user;
+    setLoading(true);
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
 
-    const profileRef = doc(db, "profiles", user.uid);
-    const profileSnap = await getDoc(profileRef);
+      const profileRef = doc(db, "profiles", user.uid);
+      const profileSnap = await getDoc(profileRef);
 
-    if (!profileSnap.exists()) {
-      // Prompt for user type if new user
-      const userType = prompt("Select user type: Hospital or Patient");
-      if (!userType || !["Hospital", "Patient"].includes(userType)) {
-        alert("Invalid or missing user type. Please try again.");
-        return;
+      if (!profileSnap.exists()) {
+        const userType = prompt("Select user type: Hospital or Patient");
+        if (!userType || !["Hospital", "Patient"].includes(userType)) {
+          alert("Invalid or missing user type. Please try again.");
+          return;
+        }
+
+        await setDoc(profileRef, {
+          email: user.email,
+          name: user.email.split("@")[0],
+          userType: userType,
+        });
       }
 
-      await setDoc(profileRef, {
-        email: user.email,
-        name: user.email.split("@")[0],
-        userType:userType,
-      });
+      if (profileSnap.exists()) {
+        const data = profileSnap.data();
+        if (data.userType === "Patient") navigate("/patient");
+        else if (data.userType === "Hospital") navigate("/hospital");
+        else if (data.userType === "Doctor") navigate("/doctor");
+        else navigate("/");
+      }
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    } finally {
+      setLoading(false);
     }
-
-    navigate("/", { state: { email: user.email } });
-  } catch (error) {
-    alert(`Error: ${error.message}`);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   const switchMode = () => setIsLogin(!isLogin);
 

@@ -24,10 +24,10 @@ const LeftImage = () => {
         alt="Left background"
         className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex flex-col justify-center items-center text-white text-center p-8">
+      <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex flex-col justify-center items-center text-white  p-8">
         <div className='-mt-80'>
         {/* Logo and Brand */}
-        <div className="flex items-center mb-4 mr-52">
+        <div className="flex mb-4 mr-52">
           <motion.div
             variants={pulseVariants}
             animate="pulse"
@@ -47,8 +47,6 @@ const LeftImage = () => {
         >
           Hospital Management Platform
         </motion.h2>
-        </div>
-        
         {/* Tagline */}
         <motion.p 
           className="text-lg italic font-light"
@@ -58,6 +56,9 @@ const LeftImage = () => {
         >
           Hospital Appointment made easy
         </motion.p>
+        </div>
+        
+        
         
         {/* Footer Text */}
         <p className="mt-auto text-sm absolute bottom-8 opacity-60 tracking-wider">

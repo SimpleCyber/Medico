@@ -1,7 +1,6 @@
 // components/Auth/SignUp.js
 import React, { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, Loader2, ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { auth, db } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
@@ -15,7 +14,6 @@ const SignUp = ({ switchMode }) => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,7 +35,7 @@ const SignUp = ({ switchMode }) => {
         userType:formData.userType,
       });
       alert("Account Created Successfully!");
-      switchMode(); // Switch to login after signup
+      switchMode(); 
     } catch (error) {
       alert(`Error: ${error.message}`);
     } finally {
