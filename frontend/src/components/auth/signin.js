@@ -19,31 +19,21 @@ const SignIn = ({ switchMode }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
+      const userCredential = await signInWithEmailAndPassword( auth, formData.email, formData.password );
       const user = userCredential.user;
-
       const profileRef = doc(db, "profiles", user.uid);
       const profileSnap = await getDoc(profileRef);
 
       if (profileSnap.exists()) {
         const { userType } = profileSnap.data();
-
         if (userType === "Patient") navigate("/patient");
         else if (userType === "Hospital") navigate("/hospital");
         else if (userType === "Doctor") navigate("/doctor");
         else navigate("/");
-      } else {
-        alert("User profile not found!");
-      }
-    } catch (error) {
-      alert(`Error: ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
+      } else { alert("User profile not found!"); }
+    } 
+    catch (error) { alert(`Error: ${error.message}`); } 
+    finally { setLoading(false); }
   };
 
   return (
@@ -92,21 +82,15 @@ const SignIn = ({ switchMode }) => {
       <button
         type="submit"
         className={`submit-btn ${loading ? "loading" : ""}`}
-        disabled={loading}
+        disabled={loading} 
       >
         {loading ? (
-          <Loader2 className="spinner" size={20} />
-        ) : (
-          <>
-            Sign In <ArrowRight size={18} />
-          </>
+          <Loader2 className="spinner" size={20} /> ) : (
+          <> Sign In <ArrowRight size={18} /> </>
         )}
       </button>
-
       <div className="auth-switch">
-        <p>
-          Don't have an account? <button onClick={switchMode}>Sign Up</button>
-        </p>
+        <p> Don't have an account? <button onClick={switchMode}>Sign Up</button> </p>
       </div>
     </form>
   );

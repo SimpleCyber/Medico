@@ -7,7 +7,6 @@ import { setDoc, doc } from "firebase/firestore";
 
 const SignUp = ({ switchMode }) => {
   const [formData, setFormData] = useState({
-    name:"",
     email: "",
     password: "",
     userType: "",
@@ -15,27 +14,30 @@ const SignUp = ({ switchMode }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    
     try {
-      const result = await createUserWithEmailAndPassword(
+      // Create user authentication
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         formData.email,
         formData.password
       );
       
+      // Extract username from email for profile name
       const name = formData.email.split("@")[0];
-      await setDoc(doc(db, "profiles", result.user.uid), {
-        name: name,
+      
+      // Store user profile in Firestore
+      await setDoc(doc(db, "profiles", userCredential.user.uid), {
+        name,
         email: formData.email,
-        userType:formData.userType,
+        userType: formData.userType,
       });
+      
       alert("Account Created Successfully!");
-      switchMode(); 
+      switchMode();
     } catch (error) {
       alert(`Error: ${error.message}`);
     } finally {
@@ -45,46 +47,30 @@ const SignUp = ({ switchMode }) => {
 
   return (
     <form onSubmit={handleSubmit} className="auth-form">
+      {/* User Type Selection */}
       <div className="form-group">
         <label>User Type</label>
         <div className="input-wrapper glass-effect relative">
           <select
             name="userType"
             value={formData.userType}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, userType: e.target.value })}
             required
-            className="w-full bg-transparent text-gray-600 placeholder-black border-none outline-none  appearance-none cursor-pointer"
+            className="w-full bg-transparent text-gray-600 placeholder-black border-none outline-none appearance-none cursor-pointer"
           >
-            <option value="" disabled className="text-black">
-              Select User Type
-            </option>
-            <option value="Hospital" className="text-black">
-              Hospital
-            </option>
-            <option value="Patient" className="text-black">
-              Patient
-            </option>
+            <option value="" disabled className="text-black">Select User Type</option>
+            <option value="Hospital" className="text-black">Hospital</option>
+            <option value="Patient" className="text-black">Patient</option>
           </select>
-
-          {/* Optional dropdown icon */}
           <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-            <svg
-              className="w-4 h-4 text-black"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19 9l-7 7-7-7"
-              />
+            <svg className="w-4 h-4 text-black" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
           </div>
         </div>
       </div>
 
+      {/* Email Input */}
       <div className="form-group">
         <label>Email</label>
         <div className="input-wrapper glass-effect">
@@ -94,12 +80,13 @@ const SignUp = ({ switchMode }) => {
             name="email"
             placeholder="you@example.com"
             value={formData.email}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             required
           />
         </div>
       </div>
 
+      {/* Password Input */}
       <div className="form-group">
         <label>Password</label>
         <div className="input-wrapper glass-effect">
@@ -109,7 +96,7 @@ const SignUp = ({ switchMode }) => {
             name="password"
             placeholder="••••••••"
             value={formData.password}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             required
           />
           <button
@@ -122,6 +109,7 @@ const SignUp = ({ switchMode }) => {
         </div>
       </div>
 
+      {/* Submit Button */}
       <button
         type="submit"
         className={`submit-btn ${loading ? "loading" : ""}`}
@@ -136,15 +124,14 @@ const SignUp = ({ switchMode }) => {
         )}
       </button>
 
+      {/* Sign In Link */}
       <div className="auth-switch">
-        <p>
-          Already have an account? <button onClick={switchMode}>Sign In</button>
-        </p>
+        <p>Already have an account? <button onClick={switchMode}>Sign In</button></p>
       </div>
 
+      {/* Terms of Service */}
       <p className="terms">
-        By signing up, you agree to our <a href="#terms">Terms of Service</a>{" "}
-        and <a href="#privacy">Privacy Policy</a>
+        By signing up, you agree to our <a href="#terms">Terms of Service</a> and <a href="#privacy">Privacy Policy</a>
       </p>
     </form>
   );

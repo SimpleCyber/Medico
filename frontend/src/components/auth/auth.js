@@ -18,33 +18,38 @@ const Auth = () => {
 
   const handleGoogleLogin = async () => {
     setLoading(true);
+    
     try {
+      // Handle Google authentication
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-
       const profileRef = doc(db, "profiles", user.uid);
       const profileSnap = await getDoc(profileRef);
 
+      // Create profile if it doesn't exist
       if (!profileSnap.exists()) {
         const userType = prompt("Select user type: Hospital or Patient");
-        if (!userType || !["Hospital", "Patient"].includes(userType)) {
+        
+        if (!["Hospital", "Patient"].includes(userType)) {
           alert("Invalid or missing user type. Please try again.");
           return;
         }
 
+        // Save new user profile
         await setDoc(profileRef, {
           email: user.email,
           name: user.email.split("@")[0],
-          userType: userType,
+          userType
         });
+        
+        // Navigate based on user type
+        navigateByUserType(userType);
+        return;
       }
 
+      // Navigate based on existing user type
       if (profileSnap.exists()) {
-        const data = profileSnap.data();
-        if (data.userType === "Patient") navigate("/patient");
-        else if (data.userType === "Hospital") navigate("/hospital");
-        else if (data.userType === "Doctor") navigate("/doctor");
-        else navigate("/");
+        navigateByUserType(profileSnap.data().userType);
       }
     } catch (error) {
       alert(`Error: ${error.message}`);
@@ -53,32 +58,51 @@ const Auth = () => {
     }
   };
 
-  const switchMode = () => setIsLogin(!isLogin);
+  // Helper function to navigate based on user type
+  const navigateByUserType = (userType) => {
+    switch (userType) {
+      case "Patient": 
+        navigate("/patient");
+        break;
+      case "Hospital": 
+        navigate("/hospital");
+        break;
+      case "Doctor": 
+        navigate("/doctor");
+        break;
+      default:
+        navigate("/");
+    }
+  };
 
   return (
     <div className="flex h-screen">
       <LeftImage />
+      
       <div className="auth-container flex-1 flex items-center justify-center p-4">
         <div className="auth-blob-1"></div>
         <div className="auth-blob-2"></div>
 
         <div className="auth-card glass-effect">
+          {/* Header */}
           <div className="auth-header">
             <div className="logo-section">
-              <ChevronLeft
-                className="back-arrow"
-                size={40}
-                onClick={() => navigate(-1)}
+              <ChevronLeft 
+                className="back-arrow" 
+                size={40} 
+                onClick={() => navigate(-1)} 
               />
               <h1>Medico</h1>
             </div>
             <p className="welcome-text">
-              {isLogin
-                ? "Welcome back, User!"
-                : "Join the best Hospital Services online"}
+              {isLogin 
+                ? "Welcome back, User!" 
+                : "Join the best Hospital Services online"
+              }
             </p>
           </div>
 
+          {/* Google Authentication */}
           <div className="social-auth">
             <button
               onClick={handleGoogleLogin}
@@ -91,14 +115,14 @@ const Auth = () => {
           </div>
 
           <div className="divider">
-            <span>or continue with Google</span>
+            <span>or continue with Email</span>
           </div>
 
-          {isLogin ? (
-            <SignIn switchMode={switchMode} />
-          ) : (
-            <SignUp switchMode={switchMode} />
-          )}
+          {/* Sign In/Sign Up Forms */}
+          {isLogin 
+            ? <SignIn switchMode={() => setIsLogin(false)} /> 
+            : <SignUp switchMode={() => setIsLogin(true)} />
+          }
         </div>
       </div>
     </div>

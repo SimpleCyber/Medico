@@ -1,6 +1,3 @@
-
-
-
 .auth-container {
     min-height: 100vh;
     display: flex;
@@ -12,7 +9,6 @@
     background: linear-gradient(to bottom, rgba(244, 247, 254, 0), rgba(244, 247, 254, 1));
   }
   
-  /* Animated background blobs */
   .auth-blob-1, .auth-blob-2 {
     position: fixed;
     border-radius: 50%;
