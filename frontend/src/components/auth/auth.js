@@ -17,69 +17,86 @@ const Auth = () => {
   const navigate = useNavigate();
 
   const handleGoogleLogin = async () => {
-    setLoading(true);
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
+  setLoading(true);
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
 
-      const profileRef = doc(db, "profiles", user.uid);
-      const profileSnap = await getDoc(profileRef);
+    const profileRef = doc(db, "profiles", user.uid);
+    const profileSnap = await getDoc(profileRef);
 
-      if (!profileSnap.exists()) {
-        await setDoc(profileRef, {
-          email: user.email,
-          name: user.email.split("@")[0],
-        });
+    if (!profileSnap.exists()) {
+      // Prompt for user type if new user
+      const userType = prompt("Select user type: Hospital or Patient");
+      if (!userType || !["Hospital", "Patient"].includes(userType)) {
+        alert("Invalid or missing user type. Please try again.");
+        return;
       }
 
-      navigate("/", { state: { email: user.email } });
-    } catch (error) {
-      alert(`Error: ${error.message}`);
-    } finally {
-      setLoading(false);
+      await setDoc(profileRef, {
+        email: user.email,
+        name: user.email.split("@")[0],
+        userType:userType,
+      });
     }
-  };
+
+    navigate("/", { state: { email: user.email } });
+  } catch (error) {
+    alert(`Error: ${error.message}`);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const switchMode = () => setIsLogin(!isLogin);
 
   return (
     <div className="flex h-screen">
-    <LeftImage />
-    <div className="auth-container flex-1 flex items-center justify-center p-4">
-      <div className="auth-blob-1"></div>
-      <div className="auth-blob-2"></div>
+      <LeftImage />
+      <div className="auth-container flex-1 flex items-center justify-center p-4">
+        <div className="auth-blob-1"></div>
+        <div className="auth-blob-2"></div>
 
-      <div className="auth-card glass-effect">
-        <div className="auth-header">
-          <div className="logo-section">
-            <ChevronLeft className="back-arrow" size={40} onClick={() => navigate(-1)} />
-            <h1>Medico</h1>
+        <div className="auth-card glass-effect">
+          <div className="auth-header">
+            <div className="logo-section">
+              <ChevronLeft
+                className="back-arrow"
+                size={40}
+                onClick={() => navigate(-1)}
+              />
+              <h1>Medico</h1>
+            </div>
+            <p className="welcome-text">
+              {isLogin
+                ? "Welcome back, User!"
+                : "Join the best Hospital Services online"}
+            </p>
           </div>
-          <p className="welcome-text">
-            {isLogin ? "Welcome back, User!" : "Join the best Hospital Services online"}
-          </p>
+
+          <div className="social-auth">
+            <button
+              onClick={handleGoogleLogin}
+              disabled={loading}
+              className="w-full flex items-center justify-center gap-2 bg-white text-gray-800 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-100 transition duration-200 disabled:opacity-50"
+            >
+              <Chrome size={20} />
+              <span>{loading ? "Loading..." : "Continue with Google"}</span>
+            </button>
+          </div>
+
+          <div className="divider">
+            <span>or continue with Google</span>
+          </div>
+
+          {isLogin ? (
+            <SignIn switchMode={switchMode} />
+          ) : (
+            <SignUp switchMode={switchMode} />
+          )}
         </div>
-
-        <div className="social-auth">
-          <button
-  onClick={handleGoogleLogin}
-  disabled={loading}
-  className="w-full flex items-center justify-center gap-2 bg-white text-gray-800 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-100 transition duration-200 disabled:opacity-50"
->
-  <Chrome size={20} />
-  <span>{loading ? "Loading..." : "Continue with Google"}</span>
-</button>
-
-        </div>
-
-        <div className="divider">
-          <span>or continue with email</span>
-        </div>
-
-        {isLogin ? <SignIn switchMode={switchMode} /> : <SignUp switchMode={switchMode} />}
       </div>
-
-    </div>
     </div>
   );
 };
